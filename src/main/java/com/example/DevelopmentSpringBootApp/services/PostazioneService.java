@@ -25,40 +25,72 @@ public class PostazioneService {
 
 
     public void savePostazione(Postazione postazione){
-        postazioneRepository.save(postazione);
-        log.info("La postazione " + postazione.getId() + " salvata con successo!");
+        try {
+            postazioneRepository.save(postazione);
+            log.info("La postazione " + postazione.getId() + " salvata con successo!");
+        }catch (Exception e){
+            log.error("Errore generico nel savePostazione  " + e.getMessage());
+        }
+
     }
 
     public List<Postazione> findAllPostazioni(){
-        return postazioneRepository.findAll();
+        try {
+            return postazioneRepository.findAll();
+
+        }catch (Exception e){
+            log.error("Errore generico nel findAllPostazioni  " + e.getMessage());
+            return List.of();
+        }
+
     }
 
     public Postazione findPostazioneById(UUID postazioneId){
-        return postazioneRepository.findById(postazioneId).orElseThrow(() -> new NotFoundException(postazioneId));
+        try {
+            return postazioneRepository.findById(postazioneId).orElseThrow(() -> new NotFoundException(postazioneId));
+        }catch (Exception e){
+            log.error("Errore generico nel findPostazioneById  " + e.getMessage());
+            return null;
+        }
     }
 
     public void findByIdAndDelete(UUID postazioneId){
-        Postazione found = this.findPostazioneById(postazioneId);
-        postazioneRepository.delete(found);
-        log.info("La postazione " + postazioneId + " cancellato correttamente!");
+        try {
+            Postazione found = this.findPostazioneById(postazioneId);
+            postazioneRepository.delete(found);
+            log.info("La postazione " + postazioneId + " cancellato correttamente!");
+        }catch (Exception e){
+            log.error("Errore generico nel findByIdAndDelete  " + e.getMessage());
+        }
+
     }
 
     public void findByIdAndUpdate(UUID postazioneId, Postazione updatedPostazione){
+        try {
+            Postazione found = this.findPostazioneById(postazioneId);
 
-        Postazione found = this.findPostazioneById(postazioneId);
+            found.setDescrizione(updatedPostazione.getDescrizione());
+            found.setEdificio(updatedPostazione.getEdificio());
+            found.setTipoPostazione(updatedPostazione.getTipoPostazione());
+            found.setMaxOccupanti(updatedPostazione.getMaxOccupanti());
 
-        found.setDescrizione(updatedPostazione.getDescrizione());
-        found.setEdificio(updatedPostazione.getEdificio());
-        found.setTipoPostazione(updatedPostazione.getTipoPostazione());
-        found.setMaxOccupanti(updatedPostazione.getMaxOccupanti());
+            postazioneRepository.save(found);
 
-        postazioneRepository.save(found);
+            log.info("La postazione " + postazioneId + " modificato correttamente!");
+        }catch (Exception e){
+            log.error("Errore generico nel findByIdAndUpdate  " + e.getMessage());
+        }
 
-        log.info("La postazione " + postazioneId + " modificato correttamente!");
     }
 
     public List<Postazione> findPostazioniByTipoAndCitta(TipoPostazione tipoPostazione, String citta){
-       return postazioneRepository.findByTipoPostazioneAndEdificioCitta(tipoPostazione,citta);
+        try {
+            return postazioneRepository.findByTipoPostazioneAndEdificioCitta(tipoPostazione,citta);
+        }catch (Exception e){
+            log.error("Errore generico nel findPostazioniByTipoAndCitta  " + e.getMessage());
+            return List.of();
+        }
+
     }
 
 }

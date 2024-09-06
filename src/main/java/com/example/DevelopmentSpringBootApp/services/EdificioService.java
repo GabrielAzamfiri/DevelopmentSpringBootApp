@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
-@Service // Service è un'altra specializzazione di @Component
-// Il service è una classe che ci consente di poter aggiungere ulteriore logica personalizzata durante le varie interazioni col database.
-// Ad esempio quando salvo un nuovo record, prima di salvarlo posso effettuare tutta una serie di controlli di validazione dei suoi attributi
-// oppure potrei magari aggiungere ulteriori attributi
+@Service
 @Slf4j
 public class EdificioService {
     @Autowired
@@ -23,34 +20,60 @@ public class EdificioService {
 
 
     public void saveEdificio(Edificio edificio){
-        edificioRepository.save(edificio);
-        log.info("L'edificio " + edificio.getNome() + " salvato con successo!");
+        try {
+            edificioRepository.save(edificio);
+            log.info("L'edificio " + edificio.getNome() + " salvato con successo!");
+        }catch (Exception e){
+            log.error("Errore generico nel saveEdificio  " + e.getMessage());
+        }
+
     }
 
     public List<Edificio> findAllEdifici(){
-        return edificioRepository.findAll();
+        try {
+            return edificioRepository.findAll();
+        }catch (Exception e){
+            log.error("Errore generico nel findAllEdifici  " + e.getMessage());
+            return List.of();
+        }
+
     }
 
     public Edificio findEdificioById(UUID edificioId){
-        return edificioRepository.findById(edificioId).orElseThrow(() -> new NotFoundException(edificioId));
+        try {
+            return edificioRepository.findById(edificioId).orElseThrow(() -> new NotFoundException(edificioId));
+        }catch (Exception e){
+            log.error("Errore generico nel findEdificioById  " + e.getMessage());
+            return null;
+        }
+
     }
 
     public void findByIdAndDelete(UUID edificioId){
-        Edificio found = this.findEdificioById(edificioId);
-        edificioRepository.delete(found);
-        log.info("L'edificio con id " + edificioId + " cancellato correttamente!");
+        try {
+            Edificio found = this.findEdificioById(edificioId);
+            edificioRepository.delete(found);
+            log.info("L'edificio con id " + edificioId + " cancellato correttamente!");
+        }catch (Exception e){
+            log.error("Errore generico nel findByIdAndDelete  " + e.getMessage());
+        }
+
     }
 
     public void findByIdAndUpdate(UUID edificioId, Edificio updatedEdificio){
+        try {
+            Edificio found = this.findEdificioById(edificioId);
 
-        Edificio found = this.findEdificioById(edificioId);
+            found.setNome(updatedEdificio.getNome());
+            found.setCitta(updatedEdificio.getCitta());
+            found.setIndirizzo(updatedEdificio.getIndirizzo());
+            edificioRepository.save(found);
 
-        found.setNome(updatedEdificio.getNome());
-        found.setCitta(updatedEdificio.getCitta());
-        found.setIndirizzo(updatedEdificio.getIndirizzo());
-        edificioRepository.save(found);
+            log.info("L'edificio con id " + edificioId + " modificato correttamente!");
+        }catch (Exception e){
+            log.error("Errore generico nel findByIdAndUpdate  " + e.getMessage());
+        }
 
-        log.info("L'edificio con id " + edificioId + " modificato correttamente!");
     }
 
 
