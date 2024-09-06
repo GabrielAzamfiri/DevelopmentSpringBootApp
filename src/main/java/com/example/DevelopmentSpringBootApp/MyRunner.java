@@ -44,7 +44,7 @@ public class MyRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("Inizio Run");
+        System.err.println("Inizio Run");
 
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DevelopmentSpringBootAppApplication.class);
@@ -59,7 +59,7 @@ public class MyRunner implements CommandLineRunner {
             Postazione postazioneSalaRiunioni1 = context.getBean("postazioneSalaRiunioni1", Postazione.class);
             Postazione postazioneSalaRiunioni2 = context.getBean("postazioneSalaRiunioni2", Postazione.class);
         }catch (Exception e){
-            System.out.println("Errore generico " + e.getMessage());
+            System.err.println("Errore generico " + e.getMessage());
         }
 
 //        try {
@@ -81,7 +81,7 @@ public class MyRunner implements CommandLineRunner {
             Utente utenteEddy= new Utente("Edyan","Eddy Turpo", "eddyturpo@gmail.com");
 
         }catch (Exception e){
-            System.out.println("Errore generico " + e.getMessage());
+            System.err.println("Errore generico " + e.getMessage());
         }
 
 //        try {
@@ -115,25 +115,25 @@ public class MyRunner implements CommandLineRunner {
 //        prenotazioneService.saveprenotazione(prenotazione3);
 //        prenotazioneService.saveprenotazione(prenotazione4);
         }catch (Exception e){
-            System.out.println("Errore generico " + e.getMessage());
+            System.err.println("Errore generico " + e.getMessage());
         }
 
         try {
             postazioneService.findPostazioniByTipoAndCitta(TipoPostazione.PRIVATO,"Monza").forEach(System.out::println);
         } catch (NotFoundException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
 
         try {
             prenotazioneService.findAllPrenotazioni().forEach(System.out::println);
         } catch (NotFoundException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
 
         try {
             System.out.println(edificioService.findEdificioById(UUID.fromString("660cf3f2-b89e-481c-9b43-8d825e6c2b10")));
         }catch (NotFoundException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
     }
 }
