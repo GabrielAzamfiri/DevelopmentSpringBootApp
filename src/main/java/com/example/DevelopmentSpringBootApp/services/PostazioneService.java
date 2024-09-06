@@ -4,6 +4,7 @@ package com.example.DevelopmentSpringBootApp.services;
 
 
 import com.example.DevelopmentSpringBootApp.entities.Postazione;
+import com.example.DevelopmentSpringBootApp.enums.TipoPostazione;
 import com.example.DevelopmentSpringBootApp.exceptions.NotFoundException;
 import com.example.DevelopmentSpringBootApp.repositories.PostazioneRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -56,6 +57,8 @@ public class PostazioneService {
         log.info("La postazione " + postazioneId + " modificato correttamente!");
     }
 
-
+    public List<Postazione> findPostazioniByTipoAndCitta(TipoPostazione tipoPostazione, String citta){
+       return postazioneRepository.findByTipoPostazioneAndEdificioCitta(tipoPostazione,citta);
+    }
 
 }

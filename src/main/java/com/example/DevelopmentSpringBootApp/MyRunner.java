@@ -7,6 +7,7 @@ import com.example.DevelopmentSpringBootApp.entities.Edificio;
 import com.example.DevelopmentSpringBootApp.entities.Postazione;
 import com.example.DevelopmentSpringBootApp.entities.Prenotazione;
 import com.example.DevelopmentSpringBootApp.entities.Utente;
+import com.example.DevelopmentSpringBootApp.enums.TipoPostazione;
 import com.example.DevelopmentSpringBootApp.services.EdificioService;
 import com.example.DevelopmentSpringBootApp.services.PostazioneService;
 import com.example.DevelopmentSpringBootApp.services.PrenotazioneService;
@@ -92,5 +93,6 @@ public class MyRunner implements CommandLineRunner {
 //        prenotazioneService.saveprenotazione(prenotazione3);
 //        prenotazioneService.saveprenotazione(prenotazione4);
 
+        postazioneService.findPostazioniByTipoAndCitta(TipoPostazione.PRIVATO,"Monza").forEach(System.out::println);
     }
 }
