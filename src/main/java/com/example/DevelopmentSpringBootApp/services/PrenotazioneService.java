@@ -3,6 +3,7 @@ package com.example.DevelopmentSpringBootApp.services;
 
 
 import com.example.DevelopmentSpringBootApp.entities.Edificio;
+import com.example.DevelopmentSpringBootApp.entities.Postazione;
 import com.example.DevelopmentSpringBootApp.entities.Prenotazione;
 import com.example.DevelopmentSpringBootApp.exceptions.NotFoundException;
 import com.example.DevelopmentSpringBootApp.repositories.EdificioRepository;
@@ -25,8 +26,18 @@ public class PrenotazioneService {
 
 
     public void saveprenotazione(Prenotazione prenotazione){
-        prenotazioneRepository.save(prenotazione);
-        log.info("La prenotazione " + prenotazione.getId() + " salvata con successo!");
+
+      List<Prenotazione>  prenotazioni = prenotazioneRepository.findByPostazioneAndDataPrenotazione(prenotazione.getPostazione(),prenotazione.getDataPrenotazione() );
+     //  boolean postazioneGiaPrenotata = prenotazioni.stream().anyMatch(preno -> preno.getDataPrenotazione().equals(prenotazione.getDataPrenotazione()));
+
+        if (prenotazioni.isEmpty()) {
+            prenotazioneRepository.save(prenotazione);
+            log.info("La prenotazione " + prenotazione.getId() + " salvata con successo!");
+        }else {
+            System.err.println("La postazione scelta è gia stata prenotata nella data richiesta!!");
+
+        }
+
     }
 
     public List<Prenotazione> findAllPrenotazioni(){

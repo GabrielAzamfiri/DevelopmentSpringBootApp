@@ -84,10 +84,13 @@ public class MyRunner implements CommandLineRunner {
         Prenotazione prenotazione2= new Prenotazione(LocalDate.of(2024,9,7), postazionePrivata2FromDB, utenteEddyFromDB);
         Prenotazione prenotazione3= new Prenotazione(LocalDate.of(2024,9,8), postazioneOpenSpace2FromDB, utenteEddyFromDB);
         Prenotazione prenotazione4= new Prenotazione(LocalDate.of(2024,9,9), postazioneSalaRiunioni1FromDB, utenteDiegoFromDB);
-        prenotazioneService.saveprenotazione(prenotazione1);
-        prenotazioneService.saveprenotazione(prenotazione2);
-        prenotazioneService.saveprenotazione(prenotazione3);
-        prenotazioneService.saveprenotazione(prenotazione4);
+        Prenotazione prenotazione5= new Prenotazione(LocalDate.of(2024,9,6), postazionePrivata1FromDB, utenteDiegoFromDB);
+
+        prenotazioneService.saveprenotazione(prenotazione5);
+//        prenotazioneService.saveprenotazione(prenotazione1);
+//        prenotazioneService.saveprenotazione(prenotazione2);
+//        prenotazioneService.saveprenotazione(prenotazione3);
+//        prenotazioneService.saveprenotazione(prenotazione4);
 
     }
 }
