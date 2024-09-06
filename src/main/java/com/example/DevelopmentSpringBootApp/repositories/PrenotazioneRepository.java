@@ -3,6 +3,7 @@ package com.example.DevelopmentSpringBootApp.repositories;
 
 import com.example.DevelopmentSpringBootApp.entities.Postazione;
 import com.example.DevelopmentSpringBootApp.entities.Prenotazione;
+import com.example.DevelopmentSpringBootApp.entities.Utente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,5 +18,5 @@ public interface PrenotazioneRepository extends JpaRepository<Prenotazione, UUID
 
 
     List<Prenotazione> findByPostazioneAndDataPrenotazione(Postazione postazione, LocalDate dataPrenotazione);
-    //
+  List<Prenotazione> findByUtenteAndDataPrenotazione(Utente utente, LocalDate dataPrenotazione);
 }

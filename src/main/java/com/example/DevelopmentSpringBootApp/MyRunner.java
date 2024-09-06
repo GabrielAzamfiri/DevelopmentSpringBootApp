@@ -44,7 +44,7 @@ public class MyRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.err.println("Inizio Run");
+        System.out.println("Inizio Run");
 
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DevelopmentSpringBootAppApplication.class);

@@ -23,13 +23,12 @@ public class PrenotazioneService {
         try {
             List<Prenotazione>  prenotazioni = prenotazioneRepository.findByPostazioneAndDataPrenotazione(prenotazione.getPostazione(),prenotazione.getDataPrenotazione() );
             //  boolean postazioneGiaPrenotata = prenotazioni.stream().anyMatch(preno -> preno.getDataPrenotazione().equals(prenotazione.getDataPrenotazione()));
-
-            if (prenotazioni.isEmpty()) {
+            List<Prenotazione> prenotazionniUtente = prenotazioneRepository.findByUtenteAndDataPrenotazione(prenotazione.getUtente(),prenotazione.getDataPrenotazione());
+            if (prenotazioni.isEmpty() && prenotazionniUtente.isEmpty()) {
                 prenotazioneRepository.save(prenotazione);
                 System.out.println("La prenotazione " + prenotazione.getId() + " salvata con successo!");
             }else {
-                System.err.println("La postazione scelta è gia stata prenotata nella data richiesta!!");
-
+                System.err.println("La postazione scelta è già stata prenotata nella data richiesta oppure l'utente ha già una prenotazione per questo giorno!!");
             }
         }catch (Exception e){
             log.error("Errore generico nel saveprenotazione " + e.getMessage());
